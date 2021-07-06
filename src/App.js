@@ -1,6 +1,19 @@
+import React, { useState, useEffect } from 'react'; 
 import './App.css';
+import Post from './Post.js';
+import {db} from './firebase';
 
 function App() {
+   const [posts, setPosts] = useState([]);
+  //use Effect runs a piece of code based on a specific condition
+  useEffect(() => {
+    //this is where code runs
+    db.collection('posts').onSnapshot(snapshot => {
+   setPosts(snapshot.docs.map(doc => doc.data()))
+
+    })
+  //every single time a file or something is added the snapshot will get it updated
+  }, []);
   return (
     <div className="App">
       
@@ -19,5 +32,5 @@ function App() {
     </div>
   );
 }
-
+ 
 export default App;
